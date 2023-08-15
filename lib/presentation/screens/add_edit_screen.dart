@@ -94,7 +94,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: Colors.black,
-                          fontSize: 16,
+                          fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -130,6 +130,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
         appBar: AppBar(
           centerTitle: false,
           elevation: 0,
+          leading: const SizedBox(),
+          leadingWidth: 0,
           title: Text(
             widget.employeeId != null
                 ? 'Edit Employee Details'
@@ -137,11 +139,39 @@ class _AddEditScreenState extends State<AddEditScreen> {
             style: GoogleFonts.roboto(
               textStyle: const TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),
             ),
           ),
+          actions: [
+            widget.employeeId == null
+                ? const SizedBox()
+                : InkWell(
+                    onTap: () {
+                      final employeeBloc = context.read<EmployeeBloc>();
+                      employeeBloc.add(ArchiveEmployee(widget.employeeId!, 1));
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: const Text('Employee data has been deleted'),
+                        action: SnackBarAction(
+                          label: "UNDO",
+                          textColor: AppColors.primary,
+                          onPressed: () {
+                            employeeBloc
+                                .add(ArchiveEmployee(widget.employeeId!, 0));
+                          },
+                        ),
+                      ));
+                      Navigator.of(context).pop();
+                    },
+                    child: const Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: DeleteImg(
+                        iconSize: 14,
+                      ),
+                    ),
+                  ),
+          ],
         ),
         bottomNavigationBar: SizedBox(
           height: SizeConfig.mediaQueryData!.padding.bottom + 90,
@@ -170,7 +200,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                       'Cancel',
                       style: GoogleFonts.roboto(
                           color: AppColors.primary,
-                          fontSize: 15,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500),
                     ),
                   ),
@@ -200,7 +230,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     child: Text(
                       'Save',
                       style: GoogleFonts.roboto(
-                          fontSize: 15, fontWeight: FontWeight.w500),
+                          fontSize: 14, fontWeight: FontWeight.w500),
                     ),
                   ),
                   const SizedBox(width: 20),
@@ -214,6 +244,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
           child: SingleChildScrollView(
             child: Column(
               children: [
+                const SizedBox(height: 4.0),
                 SizedBox(
                   height: 40,
                   child: TextField(
@@ -221,8 +252,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     maxLines: 1,
                     style: GoogleFonts.roboto(
                       textStyle: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     decoration: InputDecoration(
@@ -237,21 +268,24 @@ class _AddEditScreenState extends State<AddEditScreen> {
                         ),
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 1, horizontal: 10),
-                        hintText: 'Employee Name',
+                        hintText: 'Employee name',
                         hintStyle: GoogleFonts.roboto(
                           textStyle: const TextStyle(
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.w400,
                           ),
+                        ),
+                        prefixIconConstraints: const BoxConstraints(
+                          minWidth: 40,
                         ),
                         prefixIcon: const Icon(
                           Icons.person_outline,
                           color: AppColors.primary,
-                          size: 16,
+                          size: 17,
                         )),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 20.0),
                 GestureDetector(
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
@@ -274,32 +308,30 @@ class _AddEditScreenState extends State<AddEditScreen> {
                           size: 16,
                         ),
                         const SizedBox(
-                          width: 20,
+                          width: 13,
                         ),
                         Text(
                           _selectedRole == null
-                              ? "Select Role"
+                              ? "Select role"
                               : '$_selectedRole',
                           style: GoogleFonts.roboto(
                             textStyle: TextStyle(
                               color: _selectedRole == null
                                   ? Colors.grey.shade700
                                   : Colors.black,
-                              fontSize: 16,
-                              fontWeight: _selectedRole == null
-                                  ? FontWeight.w400
-                                  : FontWeight.w500,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                         const Spacer(),
-                        const Icon(Icons.arrow_drop_down,
-                            color: AppColors.primary),
+                        const Icon(Icons.arrow_drop_down_rounded,
+                            color: AppColors.primary, size: 35),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 20.0),
                 Row(
                   children: [
                     Expanded(
@@ -338,9 +370,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const CalendarImg(
-                                calendarSize: 16,
+                                calendarSize: 14,
                               ),
-                              const SizedBox(width: 16.0),
+                              const SizedBox(width: 15.0),
                               Text(
                                 _startDate == null
                                     ? "No Date"
@@ -351,10 +383,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
                                     color: _startDate == null
                                         ? Colors.grey.shade700
                                         : Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: _startDate == null
-                                        ? FontWeight.w400
-                                        : FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),
@@ -363,13 +393,13 @@ class _AddEditScreenState extends State<AddEditScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(width: 16.0),
+                    const SizedBox(width: 10.0),
                     const Icon(
                       Icons.arrow_forward,
                       color: AppColors.primary,
-                      size: 18,
+                      size: 16,
                     ),
-                    const SizedBox(width: 16.0),
+                    const SizedBox(width: 10.0),
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
@@ -402,9 +432,9 @@ class _AddEditScreenState extends State<AddEditScreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               const CalendarImg(
-                                calendarSize: 16,
+                                calendarSize: 14,
                               ),
-                              const SizedBox(width: 16.0),
+                              const SizedBox(width: 15.0),
                               Text(
                                 _endDate == null
                                     ? "No Date"
@@ -415,10 +445,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
                                     color: _endDate == null
                                         ? Colors.grey.shade700
                                         : Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: _endDate == null
-                                        ? FontWeight.w400
-                                        : FontWeight.w500,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
                                   ),
                                 ),
                               ),

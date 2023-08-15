@@ -25,7 +25,7 @@ class EmployeeListItem extends StatelessWidget {
               final employeeBloc = context.read<EmployeeBloc>();
               employeeBloc.add(ArchiveEmployee(employee.id, 1));
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: const Text('Employee data has been archived'),
+                content: const Text('Employee data has been deleted'),
                 action: SnackBarAction(
                   label: "UNDO",
                   textColor: AppColors.primary,
@@ -40,7 +40,7 @@ class EmployeeListItem extends StatelessWidget {
               color: Colors.red,
               child: const Padding(
                 padding: EdgeInsets.all(20.0),
-                child: DeleteImg(),
+                child: DeleteImg(iconSize: 18,),
               ),
             ),
             child: employeeItem(context),
@@ -79,12 +79,16 @@ class EmployeeListItem extends StatelessWidget {
       children: [
         ListTile(
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AddEditScreen(employeeId: employee.id),
-              ),
-            );
+            //Allow edit if not deleted
+            if(employee.isArchived==0){
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AddEditScreen(employeeId: employee.id),
+                ),
+              );
+            }
           },
           tileColor: AppColors.bgColor_white,
           title: Padding(
@@ -92,9 +96,9 @@ class EmployeeListItem extends StatelessWidget {
             child: Text(
               employee.name,
               style: GoogleFonts.roboto(
-                textStyle: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 16,
+                textStyle:  TextStyle(
+                  color: employee.isArchived==0?Colors.black:AppColors.subtitleColor,
+                  fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -111,7 +115,7 @@ class EmployeeListItem extends StatelessWidget {
                 style: GoogleFonts.roboto(
                   textStyle: const TextStyle(
                     color: AppColors.subtitleColor,
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w400,
                   ),
                 ),
@@ -128,7 +132,7 @@ class EmployeeListItem extends StatelessWidget {
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: AppColors.subtitleColor,
-                          fontSize: 13,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
                       ),
@@ -138,7 +142,7 @@ class EmployeeListItem extends StatelessWidget {
                       style: GoogleFonts.roboto(
                         textStyle: const TextStyle(
                           color: AppColors.subtitleColor,
-                          fontSize: 13,
+                          fontSize: 12,
                           fontWeight: FontWeight.w400,
                         ),
                       ),

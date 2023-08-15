@@ -26,7 +26,7 @@ class EmployeeListingScreen extends StatelessWidget {
           style: GoogleFonts.roboto(
             textStyle: const TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 17,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -79,7 +79,7 @@ class EmployeeListingScreen extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'Swipe left to archive',
+                            'Swipe left to delete',
                             style: GoogleFonts.roboto(
                               textStyle: const TextStyle(
                                 color: Colors.grey,
@@ -154,7 +154,7 @@ class EmployeeListingScreen extends StatelessWidget {
     return Column(
       children: [
         SectionTitle(
-          title: "Archived employees",
+          title: "Deleted employees",
           color: Colors.red.shade800,
         ),
         _employeeListBuilder(employees),

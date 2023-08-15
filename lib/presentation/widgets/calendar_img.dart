@@ -10,21 +10,23 @@ class CalendarImg extends StatelessWidget {
       child: Image.asset(
         "assets/calendar.png",
         width: calendarSize,
-        fit: BoxFit.fill,
+        fit: BoxFit.contain,
       ),
     );
   }
 }
 
 class DeleteImg extends StatelessWidget {
-  const DeleteImg({Key? key}) : super(key: key);
+
+  final double? iconSize;
+  const DeleteImg({Key? key, required this.iconSize}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Image.asset(
       "assets/delete.png",
-      width: 18,
-      fit: BoxFit.fill,
+      width: iconSize,
+      fit: BoxFit.contain,
     );
   }
 }
