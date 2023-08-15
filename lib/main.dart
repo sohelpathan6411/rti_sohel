@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SizeConfig().init(context);
     return MaterialApp(
-      title: 'rti_sohel',
+      title: 'RTI Sohel',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/addEdit': (context) => BlocProvider.value(
               value: employeeBloc,
-              child: AddEditScreen(),
+              child: const AddEditScreen(),
             ),
       },
     );

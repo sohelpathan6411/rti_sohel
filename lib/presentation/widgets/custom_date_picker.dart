@@ -141,8 +141,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   Widget _carousel() {
     return SizedBox(
       width: double.infinity,
-      height: 380,
+      height: 420,
       child: CalendarCarousel(
+        height: 420,
         onDayPressed: (DateTime date, List<dynamic> events) {
           setState(() {
             _selectedDate = date;

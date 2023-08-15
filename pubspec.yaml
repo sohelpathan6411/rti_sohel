@@ -37,9 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^7.0.0
   shared_preferences: ^2.2.0
-  intl: ^0.17.0
+  intl: ^0.18.0
   google_fonts: ^5.1.0
-  flutter_calendar_carousel: ^2.0.0
+  flutter_calendar_carousel: ^2.4.2
 
 dev_dependencies:
   flutter_test:
