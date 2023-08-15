@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'data/repositories/employee_repository.dart';
 import 'data/repositories/employee_repository_implementation.dart';
+import 'data/utils/size_config.dart';
 import 'presentation/blocs/employee_bloc.dart';
 import 'presentation/blocs/employee_event.dart';
 import 'presentation/screens/add_edit_screen.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     return MaterialApp(
       title: 'rti_sohel',
       debugShowCheckedModeBanner: false,
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider.value(
         value: employeeBloc,
-        child: EmployeeListingScreen(),
+        child: const EmployeeListingScreen(),
       ),
       routes: {
         '/addEdit': (context) => BlocProvider.value(

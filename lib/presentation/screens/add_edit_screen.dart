@@ -5,6 +5,7 @@ import 'package:rti_sohel/presentation/theme/app_colors.dart';
 
 import '../../data/models/employee.dart';
 import '../../data/utils/date_utils.dart';
+import '../../data/utils/size_config.dart';
 import '../blocs/employee_bloc.dart';
 import '../blocs/employee_event.dart';
 import '../blocs/employee_state.dart';
@@ -14,7 +15,7 @@ import '../widgets/custom_date_picker.dart';
 class AddEditScreen extends StatefulWidget {
   final int? employeeId;
 
-  AddEditScreen({this.employeeId});
+  const AddEditScreen({super.key, this.employeeId});
 
   @override
   _AddEditScreenState createState() => _AddEditScreenState();
@@ -127,6 +128,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
       child: Scaffold(
         backgroundColor: AppColors.bgColor_white,
         appBar: AppBar(
+          centerTitle: false,
           elevation: 0,
           title: Text(
             widget.employeeId != null
@@ -141,8 +143,8 @@ class _AddEditScreenState extends State<AddEditScreen> {
             ),
           ),
         ),
-        bottomNavigationBar: Container(
-          height: MediaQuery.of(context).padding.bottom + 90,
+        bottomNavigationBar: SizedBox(
+          height: SizeConfig.mediaQueryData!.padding.bottom + 90,
           child: Column(
             children: [
               const Divider(
@@ -162,16 +164,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                           horizontal: 20, vertical: 10),
                     ),
                     onPressed: () {
-                      // Validate returns true if the form is valid, or false otherwise.
-                      if (_selectedRole == null ||
-                          _nameController.text.isEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Please fill the details')),
-                        );
-                      } else {
-                        _saveEmployee();
-                      }
+                      Navigator.of(context).pop();
                     },
                     child: Text(
                       'Cancel',
@@ -312,6 +305,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await showDialog<DateTime>(
                             context: context,
                             builder: (BuildContext context) {
@@ -379,6 +373,7 @@ class _AddEditScreenState extends State<AddEditScreen> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () async {
+                          FocusScope.of(context).requestFocus(FocusNode());
                           await showDialog<DateTime>(
                             context: context,
                             builder: (BuildContext context) {

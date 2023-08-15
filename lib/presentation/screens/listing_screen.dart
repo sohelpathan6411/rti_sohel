@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:rti_sohel/data/utils/size_config.dart';
 import 'package:rti_sohel/presentation/theme/app_colors.dart';
 
 import '../../data/models/employee.dart';
@@ -18,6 +19,7 @@ class EmployeeListingScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.bgColor,
       appBar: AppBar(
+        centerTitle: false,
         elevation: 0,
         title: Text(
           'Employee List',
@@ -70,12 +72,27 @@ class EmployeeListingScreen extends StatelessWidget {
                     current.length == 0
                         ? const SizedBox()
                         : _currentEmployeesList(current),
+                    current.length == 0
+                        ? const SizedBox()
+                        :SizedBox(
+                        width: double.infinity,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'Swipe left to archive',
+                            style: GoogleFonts.roboto(
+                              textStyle: const TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ),
+                        )),
 
                     previous.length == 0
                         ? const SizedBox()
                         : _previousEmployeesList(previous),
 
-                    //archived
                     archived.length == 0
                         ? const SizedBox()
                         : _archivedEmployeesList(archived),
@@ -91,9 +108,10 @@ class EmployeeListingScreen extends StatelessWidget {
       ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).padding.bottom + 15, right: 10),
+            bottom: SizeConfig.mediaQueryData!.padding.bottom, right: 10),
         child: FloatingActionButton(
           elevation: 0,
+          mini: SizeConfig.screenWidth! <= 400?true: false,
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(10))),
           onPressed: () {
@@ -127,20 +145,7 @@ class EmployeeListingScreen extends StatelessWidget {
           color: AppColors.primary,
         ),
         _employeeListBuilder(employees),
-        SizedBox(
-            width: double.infinity,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Swipe left to archive',
-                style: GoogleFonts.roboto(
-                  textStyle: const TextStyle(
-                    color: Colors.grey,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            )),
+
       ],
     );
   }
@@ -176,6 +181,7 @@ class EmployeeListingScreen extends StatelessWidget {
 
   Widget _employeeListBuilder(employees) {
     return ListView.builder(
+      padding: EdgeInsets.zero,
       physics: const NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
       shrinkWrap: true,

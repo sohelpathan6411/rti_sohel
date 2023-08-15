@@ -14,8 +14,8 @@ class NoRecordsFound extends StatelessWidget {
       child: Center(
         child: Image.asset(
           "assets/no_records.png",
-          width: 260,
-          height: 260,
+          width: SizeConfig.screenWidth!*0.6,
+          height: SizeConfig.screenWidth!*0.6,
           fit: BoxFit.cover,
         ),
       ),

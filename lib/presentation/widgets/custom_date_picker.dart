@@ -12,7 +12,7 @@ class CustomDatePicker extends StatefulWidget {
   final void Function(DateTime? selectedDate) onDateSelected;
 
   const CustomDatePicker(
-      {this.initialDate,
+      {super.key, this.initialDate,
       required this.onDateSelected,
       required this.isEndDate});
 
@@ -55,82 +55,84 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            widget.isEndDate ? _endDateOptions() : _startDateOptions(),
-            _carousel(),
-            const SizedBox(height: 30.0),
-            Divider(color: AppColors.primary.withOpacity(0.5)),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    const CalendarImg(
-                      calendarSize: 18,
-                    ),
-                    const SizedBox(width: 16.0),
-                    Text(
-                      _selectedDate == null
-                          ? "No Date"
-                          : DateUtilsFormat.formatShortDate(
-                              _selectedDate!.toLocal()),
-                      style: GoogleFonts.roboto(
-                        textStyle: TextStyle(
-                          color: _selectedDate == null
-                              ? Colors.grey.shade700
-                              : Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              widget.isEndDate ? _endDateOptions() : _startDateOptions(),
+              _carousel(),
+              const SizedBox(height: 30.0),
+              Divider(color: AppColors.primary.withOpacity(0.5)),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const CalendarImg(
+                        calendarSize: 18,
+                      ),
+                      const SizedBox(width: 16.0),
+                      Text(
+                        _selectedDate == null
+                            ? "No Date"
+                            : DateUtilsFormat.formatShortDate(
+                                _selectedDate!.toLocal()),
+                        style: GoogleFonts.roboto(
+                          textStyle: TextStyle(
+                            color: _selectedDate == null
+                                ? Colors.grey.shade700
+                                : Colors.black,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                  const Spacer(),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary.withOpacity(0.1),
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                     ),
-                  ],
-                ),
-                const Spacer(),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary.withOpacity(0.1),
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
+                    onPressed: _onCancelPressed,
+                    child: Text(
+                      'Cancel',
+                      style: GoogleFonts.roboto(
+                          color: AppColors.primary,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500),
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                   ),
-                  onPressed: _onCancelPressed,
-                  child: Text(
-                    'Cancel',
-                    style: GoogleFonts.roboto(
-                        color: AppColors.primary,
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
-                const SizedBox(width: 10.0),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(6.0),
+                  const SizedBox(width: 10.0),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      elevation: 0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6.0),
+                      ),
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
                     ),
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+                    onPressed: _onSavePressed,
+                    child: Text(
+                      'Save',
+                      style: GoogleFonts.roboto(
+                          fontSize: 14, fontWeight: FontWeight.w500),
+                    ),
                   ),
-                  onPressed: _onSavePressed,
-                  child: Text(
-                    'Save',
-                    style: GoogleFonts.roboto(
-                        fontSize: 14, fontWeight: FontWeight.w500),
-                  ),
-                ),
-              ],
-            ),
-          ],
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -139,7 +141,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   Widget _carousel() {
     return SizedBox(
       width: double.infinity,
-      height: 350,
+      height: 380,
       child: CalendarCarousel(
         onDayPressed: (DateTime date, List<dynamic> events) {
           setState(() {
@@ -227,8 +229,8 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             const SizedBox(width: 16.0),
             Expanded(
               child: _buildDateButton(
-                  'Next ${(DateUtilsFormat.formatShortDay(DateTime.now().add(Duration(days: 1)).toLocal())).split(",").first}',
-                  DateTime.now().add(Duration(days: 1)),
+                  'Next ${(DateUtilsFormat.formatShortDay(DateTime.now().add(const Duration(days: 1)).toLocal())).split(",").first}',
+                  DateTime.now().add(const Duration(days: 1)),
                   1),
             ),
           ],
@@ -239,14 +241,14 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
           children: [
             Expanded(
               child: _buildDateButton(
-                  'Next ${(DateUtilsFormat.formatShortDay(DateTime.now().add(Duration(days: 2)).toLocal())).split(",").first}',
-                  DateTime.now().add(Duration(days: 2)),
+                  'Next ${(DateUtilsFormat.formatShortDay(DateTime.now().add(const Duration(days: 2)).toLocal())).split(",").first}',
+                  DateTime.now().add(const Duration(days: 2)),
                   2),
             ),
             const SizedBox(width: 16.0),
             Expanded(
               child: _buildDateButton(
-                  'After 1 Week', DateTime.now().add(Duration(days: 7)), 3),
+                  'After 1 Week', DateTime.now().add(const Duration(days: 7)), 3),
             ),
           ],
         ),

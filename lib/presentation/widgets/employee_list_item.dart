@@ -13,7 +13,7 @@ import '../screens/add_edit_screen.dart';
 class EmployeeListItem extends StatelessWidget {
   final Employee employee;
 
-  const EmployeeListItem({required this.employee});
+  const EmployeeListItem({super.key, required this.employee});
 
   @override
   Widget build(BuildContext context) {
@@ -79,18 +79,12 @@ class EmployeeListItem extends StatelessWidget {
       children: [
         ListTile(
           onTap: () {
-            if (employee.isArchived == 1) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: const Text('Swipe left to recover')),
-              );
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AddEditScreen(employeeId: employee.id),
-                ),
-              );
-            }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AddEditScreen(employeeId: employee.id),
+              ),
+            );
           },
           tileColor: AppColors.bgColor_white,
           title: Padding(
